@@ -1,0 +1,146 @@
+'use strict'
+
+/** @type {import('@adonisjs/lucid/src/Schema')} */
+const Schema = use('Schema')
+
+class AlterTblRegistrosPersonalesSchema extends Schema {
+  up () {
+    this.table('tbl_registros_personales', (table) => {
+        table.string('enfermedades_cronicas_no_transmisibles_cancerenfermedades_cronicas_no_transmisibles_hipertension_arterial').nullable();
+        table.string('enfermedades_cronicas_no_transmisibles_enfermedad_pulmonar_cronica').nullable();
+        table.string('enfermedades_cronicas_no_transmisibles_diabetes_mellitus_tipo_2').nullable();
+        table.string('infancia_0_11_asiste_programa_crecimiento_desarrollo').nullable();
+        table.string('infancia_0_11_recibio_lactancia_materna_exclusiva_6_meses').nullable();
+        table.string('infancia_0_11_presenta_carne_vacunas').nullable();
+        table.string('infancia_0_11_cuenta_esquema_vacunacion_completo').nullable();
+        table.string('infancia_0_11_sennales_evidente_maltrato').nullable();
+        table.string('infancia_0_11_recibe_micronutrientes').nullable();
+        table.string('infancia_0_11_hizo_examen_agudeza_visual').nullable();
+        table.string('infancia_0_11_asistio_consulta_odontologica').nullable();
+        table.string('infancia_0_11_fue_desparacitado').nullable();
+        table.string('infancia_0_11_presenta_alteracion_enfermedad').nullable();
+        table.string('infancia_0_11_presenta_alteracion_enfermedad_cual').nullable();
+        table.string('adolecencia_12_17_asiste_control_programa_adolescente').nullable();
+        table.string('adolecencia_12_17_examen_hemoglobina').nullable();
+        table.string('adolecencia_12_17_examen_agudeza_visual').nullable();
+        table.string('adolecencia_12_17_alteracion_enfermedad').nullable();
+        table.string('adolecencia_12_17_asistio_consulta_odontológica').nullable();
+        table.string('adolecencia_12_17_aplicado_sellantes').nullable();
+        table.string('adolecencia_12_17_desparasitado').nullable();
+        table.string('adolecencia_12_17_sennal_maltrato').nullable();
+        table.string('adolecencia_12_17_planificacion_familiar').nullable();
+        table.string('adolecencia_12_17_alteracion_enfermedad_cual').nullable();
+        table.string('juventud_adultez_18_59_control_joven').nullable();
+        table.string('juventud_adultez_18_59_asiste_consulta_odontologica').nullable();
+        table.string('juventud_adultez_18_59__citologia').nullable();
+        table.string('juventud_adultez_18_59_examen_mama').nullable();
+        table.string('juventud_adultez_18_59_mamografia').nullable();
+        table.string('juventud_adultez_18_59_examen_antigeno').nullable();
+        table.string('juventud_adultez_18_59_tacto_rectal').nullable();
+        table.string('juventud_adultez_18_59_examen_materia_fecal').nullable();
+        table.string('juventud_adultez_18_59_alteracion_enfermedad').nullable();
+        table.string('juventud_adultez_18_59_examen_sangre_riesgo_cardiovascular').nullable();
+        table.string('juventud_adultez_18_59_programa_planificacion_familiar').nullable();
+        table.string('juventud_adultez_18_59__metodos_planificacion_familiar').nullable();
+        table.string('juventud_adultez_18_59__victima_violencia').nullable();
+        table.string('juventud_adultez_18_59_alteracion_enfermedad_cual').nullable();
+        table.string('vejez_mayor_60_asiste_control_adulto_mayor').nullable();
+        table.string('vejez_mayor_60_consulta_odontologica').nullable();
+        table.string('vejez_mayor_60_citologia').nullable();
+        table.string('vejez_mayor_60_examen_mama').nullable();
+        table.string('vejez_mayor_60__mamografia').nullable();
+        table.string('vejez_mayor_60_examen__antigeno').nullable();
+        table.string('vejez_mayor_60_tacto_rectal').nullable();
+        table.string('vejez_mayor_60_examen_materia_fecal').nullable();
+        table.string('vejez_mayor_60_examen_sangre_cardiovascular').nullable();
+        table.string('vejez_mayor_60_asiste_programa_planificacion_familiar').nullable();
+        table.string('vejez_mayor_60_utiliza_metodos_planificacion_familiar').nullable();
+        table.string('vejez_mayor_60_victima_violencia').nullable();
+        table.string('mujer_embaraza_asiste_controles_prenatales').nullable();
+        table.string('mujer_embaraza_examenes_sangre').nullable();
+        table.string('mujer_embaraza_ecografias').nullable();
+        table.string('mujer_embaraza_multivitaminicos').nullable();
+        table.string('mujer_embaraza_curso_maternidad').nullable();
+        table.string('mujer_embaraza_embarazo_alto_riesgo').nullable();
+        table.string('recien_nacido_0_5_dias_parto').nullable();
+        table.string('recien_nacido_0_5_dias_atendio_parto').nullable();
+        table.string('recien_nacido_0_5_dias_aplicaron_vacunas_bebe').nullable();
+        table.string('recien_nacido_0_5_dias_asistio_control_recien_nacido').nullable();
+        table.string('recien_nacido_0_5_dias__certificado_recien_nacido').nullable();
+        table.string('promocion_salud_prevencion_recibio_educacion_salud').nullable();
+        table.string('promocion_salud_prevencion_aplica_demanda_inducida').nullable();
+        table.string('promocion_salud_prevencion_orientaciones_salud_visita').nullable();
+    })
+  }
+
+  down () {
+    this.table('tbl_registros_personales', (table) => {
+      table.dropColumn('enfermedades_cronicas_no_transmisibles_cancerenfermedades_cronicas_no_transmisibles_hipertension_arterial');
+      table.dropColumn('enfermedades_cronicas_no_transmisibles_enfermedad_pulmonar_cronica');
+      table.dropColumn('enfermedades_cronicas_no_transmisibles_diabetes_mellitus_tipo_2');
+      table.dropColumn('infancia_0_11_asiste_programa_crecimiento_desarrollo');
+      table.dropColumn('infancia_0_11_recibio_lactancia_materna_exclusiva_6_meses');
+      table.dropColumn('infancia_0_11_presenta_carne_vacunas');
+      table.dropColumn('infancia_0_11_cuenta_esquema_vacunacion_completo');
+      table.dropColumn('infancia_0_11_sennales_evidente_maltrato');
+      table.dropColumn('infancia_0_11_recibe_micronutrientes');
+      table.dropColumn('infancia_0_11_hizo_examen_agudeza_visual');
+      table.dropColumn('infancia_0_11_asistio_consulta_odontologica');
+      table.dropColumn('infancia_0_11_fue_desparacitado');
+      table.dropColumn('infancia_0_11_presenta_alteracion_enfermedad');
+      table.dropColumn('infancia_0_11_presenta_alteracion_enfermedad_cual');
+      table.dropColumn('adolecencia_12_17_asiste_control_programa_adolescente');
+      table.dropColumn('adolecencia_12_17_examen_hemoglobina');
+      table.dropColumn('adolecencia_12_17_examen_agudeza_visual');
+      table.dropColumn('adolecencia_12_17_alteracion_enfermedad');
+      table.dropColumn('adolecencia_12_17_asistio_consulta_odontológica');
+      table.dropColumn('adolecencia_12_17_aplicado_sellantes');
+      table.dropColumn('adolecencia_12_17_desparasitado');
+      table.dropColumn('adolecencia_12_17_sennal_maltrato');
+      table.dropColumn('adolecencia_12_17_planificacion_familiar');
+      table.dropColumn('adolecencia_12_17_alteracion_enfermedad_cual');
+      table.dropColumn('juventud_adultez_18_59_control_joven');
+      table.dropColumn('juventud_adultez_18_59_asiste_consulta_odontologica');
+      table.dropColumn('juventud_adultez_18_59__citologia');
+      table.dropColumn('juventud_adultez_18_59_examen_mama');
+      table.dropColumn('juventud_adultez_18_59_mamografia');
+      table.dropColumn('juventud_adultez_18_59_examen_antigeno');
+      table.dropColumn('juventud_adultez_18_59_tacto_rectal');
+      table.dropColumn('juventud_adultez_18_59_examen_materia_fecal');
+      table.dropColumn('juventud_adultez_18_59_alteracion_enfermedad');
+      table.dropColumn('juventud_adultez_18_59_examen_sangre_riesgo_cardiovascular');
+      table.dropColumn('juventud_adultez_18_59_programa_planificacion_familiar');
+      table.dropColumn('juventud_adultez_18_59__metodos_planificacion_familiar');
+      table.dropColumn('juventud_adultez_18_59__victima_violencia');
+      table.dropColumn('juventud_adultez_18_59_alteracion_enfermedad_cual');
+      table.dropColumn('vejez_mayor_60_asiste_control_adulto_mayor');
+      table.dropColumn('vejez_mayor_60_consulta_odontologica');
+      table.dropColumn('vejez_mayor_60_citologia');
+      table.dropColumn('vejez_mayor_60_examen_mama');
+      table.dropColumn('vejez_mayor_60__mamografia');
+      table.dropColumn('vejez_mayor_60_examen__antigeno');
+      table.dropColumn('vejez_mayor_60_tacto_rectal');
+      table.dropColumn('vejez_mayor_60_examen_materia_fecal');
+      table.dropColumn('vejez_mayor_60_examen_sangre_cardiovascular');
+      table.dropColumn('vejez_mayor_60_asiste_programa_planificacion_familiar');
+      table.dropColumn('vejez_mayor_60_utiliza_metodos_planificacion_familiar');
+      table.dropColumn('vejez_mayor_60_victima_violencia');
+      table.dropColumn('mujer_embaraza_asiste_controles_prenatales');
+      table.dropColumn('mujer_embaraza_examenes_sangre');
+      table.dropColumn('mujer_embaraza_ecografias');
+      table.dropColumn('mujer_embaraza_multivitaminicos');
+      table.dropColumn('mujer_embaraza_curso_maternidad');
+      table.dropColumn('mujer_embaraza_embarazo_alto_riesgo');
+      table.dropColumn('recien_nacido_0_5_dias_parto');
+      table.dropColumn('recien_nacido_0_5_dias_atendio_parto');
+      table.dropColumn('recien_nacido_0_5_dias_aplicaron_vacunas_bebe');
+      table.dropColumn('recien_nacido_0_5_dias_asistio_control_recien_nacido');
+      table.dropColumn('recien_nacido_0_5_dias__certificado_recien_nacido');
+      table.dropColumn('promocion_salud_prevencion_recibio_educacion_salud');
+      table.dropColumn('promocion_salud_prevencion_aplica_demanda_inducida');
+      table.dropColumn('promocion_salud_prevencion_orientaciones_salud_visita');
+    })
+  }
+}
+
+module.exports = AlterTblRegistrosPersonalesSchema
