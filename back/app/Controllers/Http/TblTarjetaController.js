@@ -293,6 +293,42 @@ class TblTarjetaController {
 		register.salud_oral_sin_evaluacion_odontologica = value.salud_oral_sin_evaluacion_odontologica
 		register.salud_oral_no_higiene_oral = value.salud_oral_no_higiene_oral
 
+    //=================== NUEVOS REGISTROS ================================//
+    if(value.newRegister) {
+      register.razon_social_ips = value.newRegister.razon_social_ips;
+      register.lengua_propia = value.newRegister.lengua_propia;
+      register.tipo_ocupacion = value.newRegister.tipo_ocupacion;
+      register.salud_mental = value.newRegister.salud_mental;
+      register.conocimiento_salud = value.newRegister.conocimiento_salud;
+      register.poblacion_vulnerable = value.newRegister.poblacion_vulnerable;
+      register.tipo_discapacidad = value.newRegister.tipo_discapacidad;
+      register.tiene_cuidador = value.newRegister.tiene_cuidador;
+      register.descapacidad_registro_localizacion_caracteri = value.newRegister.descapacidad_registro_localizacion_caracteri;
+      register.presento_tos_expectoracion = value.newRegister.presento_tos_expectoracion;
+      register.fuma = value.newRegister.fuma;
+      register.hace_cuanto = value.newRegister.hace_cuanto;
+      register.cuantos_cigarrillos_diarios = value.newRegister.cuantos_cigarrillos_diarios;
+      register.expocicion_quimicos = value.newRegister.expocicion_quimicos;
+      register.expocicion_convulsivos = value.newRegister.expocicion_convulsivos;
+      register.religion = value.newRegister.religion;
+      register.consumo_alcohol = value.newRegister.consumo_alcohol;
+      register.frecuancia_consumo_alcohol = value.newRegister.frecuancia_consumo_alcohol;
+      register.hace_cuanto_alcohol = value.newRegister.hace_cuanto_alcohol;
+      register.consumo_sustan_psicoactivas = value.newRegister.consumo_sustan_psicoactivas;
+      register.sustan_psicoactivas = value.newRegister.sustan_psicoactivas;
+      register.frecuensia_sustan_psicoactivas = value.newRegister.frecuensia_sustan_psicoactivas;
+      register.hace_cuanto_sustan_psicoactivas = value.newRegister.hace_cuanto_sustan_psicoactivas;
+      register.planificacion_familiar = value.newRegister.planificacion_familiar;
+      register.fecha_ultima_citologia = value.newRegister.fecha_ultima_citologia;
+      register.fecha_ultima_mestruacion = value.newRegister.fecha_ultima_mestruacion;
+      register.sufre_enf_cronica = value.newRegister.sufre_enf_cronica;
+      register.patologias = value.newRegister.patologias;
+      register.alimientacion_lactancia = value.newRegister.alimientacion_lactancia;
+      register.frecu_sepillado = value.newRegister.frecu_sepillado;
+      register.utiliza_crema_dental = value.newRegister.utiliza_crema_dental;
+      register.ingesta_crema_dental = value.newRegister.ingesta_crema_dental;
+    }
+
 		let validation = {
 			validation :true,
 			data: null,

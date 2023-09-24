@@ -191,7 +191,7 @@
           </ion-item>
 
         </ion-list>
-        <newregister></newregister>
+        <newregister @changeData="loadNewRegister"></newregister>
         <ion-button @click="enfermedad"><ion-icon name="bug-outline"></ion-icon> Paciente alto costo</ion-button>
         <ion-button @click="medicamento"><ion-icon name="bug-outline"></ion-icon> Registrar medicamentos</ion-button>
       </ion-card-content>
@@ -916,6 +916,7 @@ export default {
       codigo: "",
       idxEncuesta: -1,
       form: {
+        newRegister: null,
         arrayMedicamentos:[],
         arrayEnfermedades:[],
         persona:
@@ -1029,6 +1030,9 @@ export default {
     };
   },
   methods:{
+    loadNewRegister(data) {
+      this.form.newRegister = data.form;
+    },
     calcularEdad()
     {
       let dateString = this.form.persona.fecha_nacimiento;

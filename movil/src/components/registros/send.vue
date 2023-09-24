@@ -1,6 +1,9 @@
 <template>
     <ion-content v-if="dataArray!=null">
-        <h3 >{{dataArray.length}} encuestas realizadas</h3>
+        <h3 >{{dataArray.length}}
+            encuesta{{dataArray.length > 1 ? 's': ''}}
+            realizada{{dataArray.length > 1 ? 's': ''}}
+        </h3>
         <ion-button v-if="porcentaje===false" @click="enviarEncuestas" expand="full">Enviar</ion-button>
         
         <template v-if="porcentaje!==false">
