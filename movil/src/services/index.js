@@ -52,7 +52,6 @@ module.exports = {
 	async usuarioLogin(login, pass) {
 		let validate = false;
 		let con = await this.serverTestCon();
-		debugger
 		if (con) {
 			let me = this;
 			let url = this.serverGet() + 'loginmovil';
