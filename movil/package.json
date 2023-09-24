@@ -2,12 +2,16 @@
   "name": "sicp-movil",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "12.22.12"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
   "dependencies": {
     "@capacitor/android": "^2.4.2",
+    "@capacitor/camera": "^5.0.7",
     "@capacitor/cli": "^2.4.2",
     "@capacitor/core": "^2.4.2",
     "@ionic/vue": "0.0.4",

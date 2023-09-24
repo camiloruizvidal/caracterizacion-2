@@ -28,8 +28,8 @@ export default {
 	data() {
 		return {
 			form: {
-				login: '1061716139',
-				pass: '1061716139'
+				login: 'admin1',
+				pass: 'admin'
 			}
 		}
 	},
