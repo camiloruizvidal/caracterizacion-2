@@ -191,7 +191,7 @@
           </ion-item>
 
         </ion-list>
-
+        <newregister></newregister>
         <ion-button @click="enfermedad"><ion-icon name="bug-outline"></ion-icon> Paciente alto costo</ion-button>
         <ion-button @click="medicamento"><ion-icon name="bug-outline"></ion-icon> Registrar medicamentos</ion-button>
       </ion-card-content>
@@ -879,7 +879,9 @@
 
 <script>
 import { required, minLength, between } from 'vuelidate/lib/validators'
+import newregister from './newregister.vue';
 export default {
+  components: { newregister },
   data() {
     return {
       arrayEPS:[],
