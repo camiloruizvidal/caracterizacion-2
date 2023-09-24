@@ -118,6 +118,11 @@ class TblTarjetaController {
 		data.parasitos = request.input('parasitos')
 		data.acaros = request.input('acaros')
 		data.zancudos = request.input('zancudos')
+
+    if(request.input('foto')) {
+      data.foto = request.input('foto');
+    }
+
 		await data.save();
 		this.saveMortalidad(request.input('mortalidad'),data.id)
 		return data.id;

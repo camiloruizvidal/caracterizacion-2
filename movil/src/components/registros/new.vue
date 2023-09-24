@@ -428,6 +428,7 @@
 
                 <ion-item>
                     <ion-label position="stacked">Departamento</ion-label>
+                    {{ form.departamento }}
                     <ion-select
                         @ionChange="form.departamento = $event.target.value"
                         :value="form.departamento"
@@ -443,6 +444,7 @@
                 </ion-item>
                 <ion-item>
                     <ion-label position="stacked">Municipio</ion-label>
+                    {{form.municipio}}
                     <ion-select
                         :disabled="form.departamento == ''"
                         @ionChange="form.municipio = $event.target.value"
