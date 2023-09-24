@@ -5,7 +5,7 @@ const Schema = use('Schema')
 
 class AddNewColumnsToSchema extends Schema {
   up () {
-    this.table('tbl_registros_personales', (table) => {
+    this.table('tbl_tarjetas_familiares', (table) => {
       table.integer('ingresos_mensuales_vivienda').nullable()
       table.boolean('alcantarillado').nullable()
       table.boolean('gas').nullable()
@@ -76,7 +76,7 @@ class AddNewColumnsToSchema extends Schema {
   }
 
   down () {
-    this.table('tbl_registros_personales', (table) => {
+    this.table('tbl_tarjetas_familiares', (table) => {
       table.dropColumn('ingresos_mensuales_vivienda')
       table.dropColumn('alcantarillado')
       table.dropColumn('gas')

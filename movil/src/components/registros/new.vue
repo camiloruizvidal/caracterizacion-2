@@ -510,6 +510,7 @@
                         :value="form.direccion"
                     ></ion-input>
                 </ion-item>
+                <newregister2 @changeData="loadNewRegister2"></newregister2>
                 <ion-item>
                     <ion-label position="stacked">Ubicación GPS</ion-label>
                     <ion-input
@@ -877,8 +878,11 @@
 import fn from "../../services";
 import {required} from "vuelidate/lib/validators";
 import {Plugins, CameraResultType, CameraSource} from "@capacitor/core";
+import newregister2 from "./newregister2.vue"
 const {Camera} = Plugins;
 export default {
+
+    components: { newregister2 },
     validations: {
         form: {
             donde_toma_agua: {required},
@@ -893,6 +897,7 @@ export default {
                 foto: null,
                 finalizado: false,
                 codigo: "",
+                newRegister2: null,
                 //====================datos de la tarjeta familiar====================//
                 ficha: "",
                 nivel: "",
@@ -1040,6 +1045,9 @@ export default {
         }
     },
     methods: {
+        loadNewRegister(data) {
+            this.form.newRegister = data.form;
+        },
         async tomarFoto() {
             const image = await Camera.getPhoto({
                 quality: 90,
