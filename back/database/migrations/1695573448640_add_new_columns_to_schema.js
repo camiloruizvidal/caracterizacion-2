@@ -76,7 +76,7 @@ class AddNewColumnsToSchema extends Schema {
   }
 
   down () {
-    this.table('add_new_columns_tos', (table) => {
+    this.table('tbl_registros_personales', (table) => {
       table.dropColumn('ingresos_mensuales_vivienda')
       table.dropColumn('alcantarillado')
       table.dropColumn('gas')

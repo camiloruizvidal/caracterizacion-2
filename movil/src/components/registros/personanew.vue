@@ -192,6 +192,7 @@
 
         </ion-list>
         <newregister @changeData="loadNewRegister"></newregister>
+        <newregister2 @changeData="loadNewRegister2"></newregister2>
         <ion-button @click="enfermedad"><ion-icon name="bug-outline"></ion-icon> Paciente alto costo</ion-button>
         <ion-button @click="medicamento"><ion-icon name="bug-outline"></ion-icon> Registrar medicamentos</ion-button>
       </ion-card-content>
@@ -880,8 +881,9 @@
 <script>
 import { required, minLength, between } from 'vuelidate/lib/validators'
 import newregister from './newregister.vue';
+import newregister2 from './newregister2.vue';
 export default {
-  components: { newregister },
+  components: { newregister, newregister2 },
   data() {
     return {
       arrayEPS:[],
@@ -917,6 +919,7 @@ export default {
       idxEncuesta: -1,
       form: {
         newRegister: null,
+        newRegister2: null,
         arrayMedicamentos:[],
         arrayEnfermedades:[],
         persona:
@@ -1032,6 +1035,9 @@ export default {
   methods:{
     loadNewRegister(data) {
       this.form.newRegister = data.form;
+    },
+    loadNewRegister2(data) {console.log({data})
+      this.form.newRegister2 = data.form;
     },
     calcularEdad()
     {
