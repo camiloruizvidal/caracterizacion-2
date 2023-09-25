@@ -67,17 +67,11 @@
   </div>
 </template>
 <script>
+import localdata from './services/localdata';
 export default {
-  watch:{
-    $route(to, from)
-    {
-      this.validateMenu();
-    }
-  },
   data () {
     return {
       title:'',
-      logueado:false,
     }
   },
   methods:{
@@ -89,16 +83,18 @@ export default {
       }
       this.$refs.menuSICP.close();
 
-    },
-    validateMenu()
-    {
-      this.title=this.$route.meta.title;
-      this.logueado=(this.$route.name!=='login');
     }
   },
-  mounted()
-  {
-    this.validateMenu();
+  computed: {
+
+    logueado() {
+      if(this.$route) {
+        this.title = this.$route.meta.title;
+      }
+      const usuario = localdata.getItem('usuario');
+      return usuario != null;
+    }
+
   }
 }
 </script>

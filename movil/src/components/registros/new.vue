@@ -541,6 +541,7 @@
                         <ion-icon name="bug-outline"></ion-icon>
                         Tomar Foto
                     </ion-button>
+                    <input type="file" accept="image/*" ref="inputFile" style="display: none" @change="handleFileChange">
                 </ion-item>
                 <ion-item v-if="form.foto">
                     <img :src="form.foto" alt="Foto" />
@@ -881,8 +882,10 @@
 <script>
 import fn from "../../services";
 import {required} from "vuelidate/lib/validators";
-import {Plugins, CameraResultType, CameraSource} from "@capacitor/core";
+import {Plugins, CameraResultType} from "@capacitor/core";
 import newregister2 from "./newregister2.vue"
+import localdata from "../../services/localdata";
+
 const {Camera} = Plugins;
 export default {
 
@@ -1053,14 +1056,28 @@ export default {
             this.form.newRegister = data.form;
         },
         async tomarFoto() {
-            const image = await Camera.getPhoto({
-                quality: 90,
-                allowEditing: false,
-                resultType: CameraResultType.Base64,
-                source: CameraSource.Camera,
-            });
-            this.form.foto = "data:image/jpeg;base64," + image.base64String;
+            this.$refs.inputFile.click();
+            //TODO Bug con android
+            //const image = await Camera.getPhoto({
+            //    quality: 90,
+            //    allowEditing: false,
+            //    resultType: CameraResultType.Base64,
+            //    source: CameraSource.Camera,
+            //});
+            //this.form.foto = "data:image/jpeg;base64," + image.base64String;
         },
+
+        handleFileChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.form.foto = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        },
+
         Guardar() {
             this.$v.$touch();
             if (this.$v.$invalid) {
@@ -1073,16 +1090,16 @@ export default {
                     })
                     .then((a) => a.present());
             } else {
-                let resultado = JSON.parse(localStorage.getItem("encuestas"));
-                let usuario = JSON.parse(localStorage.getItem("usuario"));
+                let resultado = JSON.parse(localdata.getItem("encuestas"));
+                let usuario = JSON.parse(localdata.getItem("usuario"));
                 this.idx = resultado.findIndex(
                     (user) => user.id === usuario.id
                 );
                 resultado[this.idx].encuestas.push(this.form);
                 usuario.actual = parseInt(usuario.actual) + 1;
-                localStorage.setItem("usuario", JSON.stringify(usuario));
-                localStorage.removeItem("encuestas");
-                localStorage.setItem("encuestas", JSON.stringify(resultado));
+                localdata.setItem("usuario", JSON.stringify(usuario));
+                localdata.remove("encuestas");
+                localdata.setItem("encuestas", JSON.stringify(resultado));
                 this.$ionic.alertController
                     .create({
                         cssClass: "my-custom-class",

@@ -23,7 +23,7 @@
 
 <script>
 
-import fn from '../../services'
+import fn from '../../services/index'
 export default {
 	data() {
 		return {

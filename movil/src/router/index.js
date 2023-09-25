@@ -11,50 +11,49 @@ import configurar from '../components/configuracion/server'
 
 
 import login from '../components/user/login'
-const pathName = window.location.origin;
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: pathName + '/registros',
+    path: '/registros',
     name: 'registros',
     component: registros,
     meta:{title:'Registros'}
   },
   {
-    path: pathName + '/registros/new',
+    path: '/registros/new',
     name: 'registrosNew',
     component: registrosNew,
     meta:{title:'Nuevo registro'}
   },
   {
-    path: pathName + '/registros/persona/:codigo',//codigo de la tarjeta
+    path: '/registros/persona/:codigo',//codigo de la tarjeta
     name: 'personasNew',
     component: personasNew,
     meta:{title:'Registrando datos personales'}
   },
   {
-    path: pathName + '/configurar',//codigo de la tarjeta
+    path: '/configurar',//codigo de la tarjeta
     name: 'configurar',
     component: configurar,
     meta:{title:'Conexión al servidor'}
   },
   {
-    path: pathName + '/enviar',//codigo de la tarjeta
+    path: '/enviar',//codigo de la tarjeta
     name: 'enviar',
     component: enviar,
     meta:{title:'Enviar registros'}
   },
   
   {
-    path: pathName + '/',
+    path: '/',
     name: 'login',
     component: login,
     meta:{title:'Login'}
   },
 
   {
-    path: pathName + '/about',
+    path: '/about',
     name: 'About',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -62,9 +61,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
-console.log({pathName})
 const router = new VueRouter({
-  //mode: 'history',
+  mode: 'history',
   routes
 })
 

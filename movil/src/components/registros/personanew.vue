@@ -1721,6 +1721,7 @@
 import {required, minLength, between} from "vuelidate/lib/validators";
 import fn from "../../services";
 import newregister from "./newregister.vue";
+import localdata from "../../services/localdata";
 export default {
     components: {newregister},
     data() {
@@ -1986,14 +1987,14 @@ export default {
             this.estado = this.estados[parseInt(index) - 1];
         },
         Guardar() {
-            let resultado = JSON.parse(localStorage.getItem("encuestas"));
-            let usuario = JSON.parse(localStorage.getItem("usuario"));
+            let resultado = JSON.parse(localdata.getItem("encuestas"));
+            let usuario = JSON.parse(localdata.getItem("usuario"));
             let idx = resultado.findIndex((user) => user.id === usuario.id);
             let idx2 = resultado[idx].encuestas.findIndex(
                 (code) => code.codigo === parseInt(this.codigo)
             );
             resultado[idx].encuestas[idx2].registros.push(this.form);
-            localStorage.setItem("encuestas", JSON.stringify(resultado));
+            localdata.setItem("encuestas", JSON.stringify(resultado));
             return this.$ionic.alertController
                 .create({
                     cssClass: "my-custom-class",
@@ -2007,8 +2008,8 @@ export default {
     },
     mounted() {
         this.codigo = parseInt(this.$route.params.codigo);
-        let resultado = JSON.parse(localStorage.getItem("encuestas"));
-        let usuario = JSON.parse(localStorage.getItem("usuario"));
+        let resultado = JSON.parse(localdata.getItem("encuestas"));
+        let usuario = JSON.parse(localdata.getItem("usuario"));
         let idx = resultado.findIndex((user) => user.id === usuario.id);
         this.arrayEPS = fn.epsGet();
         this.idxEncuesta = resultado[idx].encuestas.findIndex(

@@ -30,6 +30,8 @@
 
 <script>
 import fun from '../Functions/index'
+import localdata from '../../services/localdata';
+
 export default {
     watch:{
         
@@ -59,18 +61,18 @@ export default {
             temp.forEach(value=>{
                 thiss.dataArray.push(value);
             });
-            let resultado = JSON.parse(localStorage.getItem('encuestas'));
-            let usuario = JSON.parse(localStorage.getItem('usuario'));
+            let resultado = JSON.parse(localdata.getItem('encuestas'));
+            let usuario = JSON.parse(localdata.getItem('usuario'));
             let idx = resultado.findIndex( user => user.id === usuario.id );
             resultado[idx].encuestas=this.dataArray;
-            localStorage.setItem('encuestas',JSON.stringify(resultado));
+            localdata.setItem('encuestas',JSON.stringify(resultado));
         },
         loadData()
         {
             try {
                 
-            let resultado = JSON.parse(localStorage.getItem('encuestas'));
-            let usuario = JSON.parse(localStorage.getItem('usuario'));
+            let resultado = JSON.parse(localdata.getItem('encuestas'));
+            let usuario = JSON.parse(localdata.getItem('usuario'));
             let idx = resultado.findIndex( user => user.id === usuario.id );
             this.dataArray=resultado[idx].encuestas;
             } catch (error) {
@@ -123,7 +125,7 @@ export default {
     },
     mounted()
     {
-        let server = JSON.parse(localStorage.getItem('server'))
+        let server = JSON.parse(localdata.getItem('server'))
         if(server === null)
         {
             this.texto='No hay un servidor configurado'
