@@ -36,6 +36,7 @@ export default {
 	methods: {
 		async iniciar() {
 			let response = await fn.usuarioLogin(this.form.login, this.form.pass)
+			console.log({response});debugger
 			if (response) {
 				this.register()
 			} else {

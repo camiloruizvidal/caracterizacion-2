@@ -2,7 +2,10 @@
 node_modules
 /dist
 /www
-/android
+/android/.gradle
+/android/.idea
+/android/app/build
+/android/capacitor-cordova-android-plugins
 /.gradle
 
 

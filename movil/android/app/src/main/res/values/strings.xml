@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SICP</string>
+    <string name="title_activity_main">SICP</string>
+    <string name="package_name">app.sicp.com</string>
+    <string name="custom_url_scheme">app.sicp.com</string>
+</resources>
