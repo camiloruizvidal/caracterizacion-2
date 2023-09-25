@@ -1,3 +1,4 @@
 
 .DS_Store
 frontend/package-lock.json
+SICP2_4/app/src/main/assets/*
