@@ -123,8 +123,8 @@ class TblTarjetaController {
       data.foto = request.input('foto');
     }
 
-    if(input('newRegister2')) {
-      const newRegister2 = input('newRegister2');
+    if(request.input('newRegister2')) {
+      const newRegister2 = request.input('newRegister2');
       data.ingresos_mensuales_vivienda = newRegister2.ingresos_mensuales_vivienda;
       data.alcantarillado = newRegister2.alcantarillado;
       data.gas = newRegister2.gas;
@@ -193,7 +193,7 @@ class TblTarjetaController {
       data.clasificacion_saneamiento = newRegister2.clasificacion_saneamiento;
     }
 
-		await data.save();
+    await data.save();
 		this.saveMortalidad(request.input('mortalidad'),data.id)
 		return data.id;
 	}
