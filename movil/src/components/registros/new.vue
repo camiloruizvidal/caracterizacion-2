@@ -427,8 +427,10 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label position="stacked">Departamento</ion-label>
-                    {{ form.departamento }}
+                    <ion-label position="stacked">
+                        <i class="r">*</i>
+                        Departamento
+                    </ion-label>
                     <ion-select
                         @ionChange="form.departamento = $event.target.value"
                         :value="form.departamento"
@@ -443,8 +445,10 @@
                     </ion-select>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Municipio</ion-label>
-                    {{form.municipio}}
+                    <ion-label position="stacked">
+                        <i class="r">*</i>
+                        Municipio
+                    </ion-label>
                     <ion-select
                         :disabled="form.departamento == ''"
                         @ionChange="form.municipio = $event.target.value"
@@ -510,7 +514,7 @@
                         :value="form.direccion"
                     ></ion-input>
                 </ion-item>
-                <newregister2 @changeData="loadNewRegister2"></newregister2>
+                <newregister2 @changeData="loadNewRegister"></newregister2>
                 <ion-item>
                     <ion-label position="stacked">Ubicación GPS</ion-label>
                     <ion-input
