@@ -1056,11 +1056,9 @@ export default {
             const image = await Camera.getPhoto({
                 quality: 90,
                 allowEditing: false,
-                resultType: CameraResultType.Base64,
-                source: CameraSource.Camera,
+                resultType: 'base64',
+                source: 'camera',
             });
-
-            // La imagen capturada se encuentra en image.base64String
             this.form.foto = "data:image/jpeg;base64," + image.base64String;
         },
         Guardar() {
