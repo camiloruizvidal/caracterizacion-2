@@ -1056,8 +1056,8 @@ export default {
             const image = await Camera.getPhoto({
                 quality: 90,
                 allowEditing: false,
-                resultType: 'base64',
-                source: 'camera',
+                resultType: CameraResultType.Base64,
+                source: CameraSource.Camera,
             });
             this.form.foto = "data:image/jpeg;base64," + image.base64String;
         },
