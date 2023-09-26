@@ -1,5 +1,6 @@
 # sicp-movil
 
+Este proyecto fue desarrollado con `node v12.22.12`
 ## Project setup
 ```
 npm install
