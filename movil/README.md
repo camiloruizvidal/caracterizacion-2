@@ -1,6 +1,7 @@
 # sicp-movil
 
-Este proyecto fue desarrollado con `node v12.22.12`
+Este proyecto fue desarrollado con `node v12.22.12`. También se adjunta el proyecto
+de android en java para evitar problemas de compactibildad con en un futuro.
 ## Project setup
 ```
 npm install
