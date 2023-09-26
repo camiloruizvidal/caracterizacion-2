@@ -35,12 +35,12 @@ export default {
 	},
 	methods: {
 		async iniciar() {
-			let response = await fn.usuarioLogin(this.form.login, this.form.pass)
-			console.log({response});debugger
-			if (response) {
-				this.register()
-			} else {
-				this.$ionic.alertController
+			try {
+				let response = await fn.usuarioLogin(this.form.login, this.form.pass)
+				if (response) {
+					this.register()
+				} else {
+					this.$ionic.alertController
 					.create({
 						cssClass: 'my-custom-class',
 						header: 'Error',
@@ -48,6 +48,17 @@ export default {
 						buttons: ['OK'],
 					})
 					.then(a => a.present());
+				}
+
+			} catch (error) {
+				this.$ionic.alertController
+				.create({
+					cssClass: 'my-custom-class',
+					header: 'Error',
+					message: 'No se pudo ingresar. (' +  JSON.stringify(error) + ')',
+					buttons: ['OK'],
+				})
+				.then(a => a.present());
 			}
 		},
 		register() {
@@ -70,7 +81,3 @@ export default {
 	}
 }
 </script>
-
-<style>
-
-</style>

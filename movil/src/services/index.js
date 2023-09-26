@@ -114,6 +114,11 @@ export default new class functions {
 		return (data === null ? [] : data);
 	}
 
+	serverDelete() {
+		let data = localdata.remove('server');
+		return (data === null ? [] : data);
+	}
+
 	serverGet() {
 		let server = this.serverAll();
 		let response = false;
@@ -129,9 +134,6 @@ export default new class functions {
 			port: port,
 			pass: pass
 		}));
-		console.log({
-			data: this.serverAll()
-		});
 	}
 
 	encuestaLoad() {
