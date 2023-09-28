@@ -404,9 +404,7 @@
 
         <ion-item>
             <ion-label>Enfermedades de Salud Mental</ion-label>
-            <ion-select
-                @ionChange="handleSelectChange"
-            >
+            <ion-select @ionChange="handleSelectChange">
                 <ion-select-option value="ANSIEDAD">ANSIEDAD</ion-select-option>
                 <ion-select-option value="DEPRESION">
                     DEPRESION
@@ -422,13 +420,25 @@
                 </ion-select-option>
             </ion-select>
         </ion-item>
-        <!-- Cuadro de texto que aparecerá si se selecciona "OTRA CUAL" -->
+
         <ion-item v-if="tiene_enfermedades_salud_mental === 'OTRA CUAL'">
             <ion-label position="stacked">Especifique</ion-label>
             <ion-input
                 v-model="form.otra_enfermedad"
                 @input="handleTextChange"
             ></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-checkbox
+                slot="end"
+                @ionChange="
+                    form.esta_empleado_actualmente = $event.detail.checked
+                "
+            ></ion-checkbox>
+            <ion-label position="stacked">
+                ¿Está empleado actualmente?
+            </ion-label>
         </ion-item>
     </div>
 </template>
@@ -440,15 +450,16 @@ export default {
             deep: true,
             handler(form) {
                 this.$emit("changeData", {form});
-                console.log({form})
+                console.log({form});
             },
         },
     },
     data() {
         return {
-            tiene_enfermedades_salud_mental: '',
+            tiene_enfermedades_salud_mental: "",
             form: {
-                tiene_enfermedades_salud_mental: '',
+                esta_empleado_actualmente: false,
+                tiene_enfermedades_salud_mental: "",
                 razon_social_ips: null,
                 lengua_propia: null,
                 tipo_ocupacion: null,
@@ -491,6 +502,6 @@ export default {
         handleTextChange(event) {
             this.form.tiene_enfermedades_salud_mental = event.target.value;
         },
-    }
+    },
 };
 </script>
