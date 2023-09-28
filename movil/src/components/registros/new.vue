@@ -421,8 +421,12 @@
                         @ionChange="form.zona = $event.target.value"
                         :value="form.zona"
                     >
-                        <ion-select-option value="Rural">Rural</ion-select-option>
-                        <ion-select-option value="Urbana">Urbana</ion-select-option>
+                        <ion-select-option value="Rural">
+                            Rural
+                        </ion-select-option>
+                        <ion-select-option value="Urbana">
+                            Urbana
+                        </ion-select-option>
                     </ion-select>
                 </ion-item>
 
@@ -516,6 +520,7 @@
                 </ion-item>
                 <newregister2 @changeData="loadNewRegister"></newregister2>
                 <ion-item>
+                    {coordinates:{{ coordinates }}}
                     <ion-button @click="getCurrentPosition()">
                         Capturar ubicación
                     </ion-button>
@@ -895,9 +900,7 @@ import {Plugins} from "@capacitor/core";
 import {required} from "vuelidate/lib/validators";
 import localdata from "../../services/localdata";
 import newregister2 from "./newregister2.vue";
-import Newregister3 from './newregister3.vue';
-
-const {Geolocation} = Plugins;
+import Newregister3 from "./newregister3.vue";
 
 export default {
     components: {newregister2, Newregister3},
@@ -994,6 +997,7 @@ export default {
             arrayCorregimientos: [],
             arrayEps: [],
             arrayVeredas: [],
+            coordinates: null,
         };
     },
     watch: {
@@ -1065,19 +1069,56 @@ export default {
     },
     methods: {
         async checkPermission() {
-            const status = await Geolocation.requestPermissions();
-            if (status && status.location === "granted") {
-                this.isAvailableGPS = true;
-            } else {
-                console.error("El usuario ha denegado el acceso a la ubicación.");
-            }
+            const {Geolocation} = Plugins;
+
+            Geolocation.requestPermissions()
+                .then(() => {
+                    Geolocation.getCurrentPosition()
+                        .then((position) => {
+                            this.isAvailableGPS = true;
+                            this.form.longitud = position.coords.latitude;
+                            this.form.latitud = position.coords.longitude;
+                        })
+                        .catch((error) => {
+                            this.$ionic.alertController
+                                .create({
+                                    cssClass: ".alert-wrapper",
+                                    header: "Error",
+                                    message: "Revise que el GPS esté activo.",
+                                    buttons: ["ok"],
+                                })
+                                .then((a) => a.present());
+                        });
+                })
+                .catch(async () => {
+                    await this.checkPermission();
+                    this.$ionic.alertController
+                        .create({
+                            cssClass: ".alert-wrapper",
+                            header: "Error",
+                            message:
+                                "El usuario no ha podido dar el acceso a la ubicación.",
+                            buttons: ["ok"],
+                        })
+                        .then((a) => a.present());
+                });
         },
+
         async getCurrentPosition() {
+            const {Geolocation} = Plugins;
             if (this.isAvailableGPS) {
                 const coordinates = await Geolocation.getCurrentPosition();
-                console.log("Current", coordinates);
+                this.coordinates = coordinates;
             } else {
-                console.error("No se han concedido los permisos de ubicación.");
+                return this.$ionic.alertController
+                    .create({
+                        cssClass: ".alert-wrapper",
+                        header: "Error",
+                        message:
+                            "No se han concedido los permisos de ubicación.",
+                        buttons: ["ok"],
+                    })
+                    .then((a) => a.present());
             }
         },
 
@@ -1086,15 +1127,13 @@ export default {
         },
 
         loadNewRegister3(data) {
-
-            if(this.form.newRegister == null) {
+            if (this.form.newRegister == null) {
                 this.form.newRegister = {};
             }
 
-            Object.keys(data).forEach(key => {
+            Object.keys(data).forEach((key) => {
                 this.form.newRegister[key] = data[key];
             });
-
         },
 
         async tomarFoto() {
@@ -1168,7 +1207,7 @@ export default {
             });
         },
     },
-    mounted() {
+    async mounted() {
         this.checkPermission();
         let data = fn.usuarioLoad();
         this.form.codigo = data.actual;

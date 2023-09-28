@@ -7,6 +7,9 @@
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
+    },
+    "Geolocation": {
+      "geolocationUsageDescription": "Necesitamos acceder a tu ubicación para proporcionarte información relevante."
     }
   },
   "cordova": {}
