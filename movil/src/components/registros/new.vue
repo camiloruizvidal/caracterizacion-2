@@ -1063,7 +1063,6 @@ export default {
     },
     methods: {
         async checkPermission() {
-
             const status = await Geolocation.requestPermissions();
             if (status && status.location === "granted") {
                 this.isAvailableGPS = true;
