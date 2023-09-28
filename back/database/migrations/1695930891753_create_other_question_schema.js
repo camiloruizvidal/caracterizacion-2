@@ -8,6 +8,8 @@ class CreateOtherQuestionSchema extends Schema {
     this.table('tbl_registros_personales', (table) => {
       table.string('tiene_enfermedades_salud_mental', 255).nullable();
       table.boolean('esta_empleado_actualmente').defaultTo(false);
+      table.integer('talla').nullable();
+      table.integer('peso').nullable();
     })
   }
 
@@ -15,6 +17,8 @@ class CreateOtherQuestionSchema extends Schema {
     this.table('tbl_registros_personales', (table) => {
       table.dropColumn('tiene_enfermedades_salud_mental');
       table.dropColumn('esta_empleado_actualmente');
+      table.dropColumn('talla');
+      table.dropColumn('peso');
 
     })
   }

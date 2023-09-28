@@ -233,6 +233,9 @@
                         <ion-select-option value="Plancha con cielo raso">
                             Plancha con cielo raso
                         </ion-select-option>
+                        <ion-select-option value="Eternit">
+                            Eternit
+                        </ion-select-option>
                     </ion-select>
                 </ion-item>
                 <ion-item>
@@ -418,11 +421,8 @@
                         @ionChange="form.zona = $event.target.value"
                         :value="form.zona"
                     >
-                        <ion-select-option value="1">1</ion-select-option>
-                        <ion-select-option value="2">2</ion-select-option>
-                        <ion-select-option value="3">3</ion-select-option>
-                        <ion-select-option value="4">4</ion-select-option>
-                        <ion-select-option value="5">5</ion-select-option>
+                        <ion-select-option value="Rural">Rural</ion-select-option>
+                        <ion-select-option value="Urbana">Urbana</ion-select-option>
                     </ion-select>
                 </ion-item>
 
@@ -842,6 +842,7 @@
                         <ion-label>ACAROS</ion-label>
                     </ion-item>
                 </ion-list>
+                <newregister-3 @changeData="loadNewRegister3"></newregister-3>
             </ion-card-content>
         </ion-card>
 
@@ -894,11 +895,12 @@ import {Plugins} from "@capacitor/core";
 import {required} from "vuelidate/lib/validators";
 import localdata from "../../services/localdata";
 import newregister2 from "./newregister2.vue";
+import Newregister3 from './newregister3.vue';
 
 const {Geolocation} = Plugins;
 
 export default {
-    components: {newregister2},
+    components: {newregister2, Newregister3},
     validations: {
         form: {
             donde_toma_agua: {required},
@@ -1082,6 +1084,19 @@ export default {
         loadNewRegister(data) {
             this.form.newRegister = data.form;
         },
+
+        loadNewRegister3(data) {
+
+            if(this.form.newRegister == null) {
+                this.form.newRegister = {};
+            }
+
+            Object.keys(data).forEach(key => {
+                this.form.newRegister[key] = data[key];
+            });
+
+        },
+
         async tomarFoto() {
             this.$refs.inputFile.click();
             //TODO Bug con android

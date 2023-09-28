@@ -628,6 +628,36 @@
                             :value="form.signos_vitales_frecuencia_respiratoria"
                         ></ion-input>
                     </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">
+                            Talla
+                        </ion-label>
+                        <ion-input
+                            type="number"
+                            @input="
+                                form.talla =
+                                    $event.target.value
+                            "
+                            :value="
+                                form.talla
+                            "
+                        ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked">
+                            Peso
+                        </ion-label>
+                        <ion-input
+                            type="number"
+                            @input="
+                                form.peso =
+                                    $event.target.value
+                            "
+                            :value="
+                                form.peso
+                            "
+                        ></ion-input>
+                    </ion-item>
                 </ion-list>
             </ion-card-content>
         </ion-card>
@@ -1758,6 +1788,8 @@ export default {
             codigo: "",
             idxEncuesta: -1,
             form: {
+                talla: '',
+                peso: '',
                 newRegister: null,
                 arrayMedicamentos: [],
                 arrayEnfermedades: [],
