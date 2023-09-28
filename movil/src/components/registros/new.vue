@@ -440,7 +440,7 @@
                             :value="departamento.id"
                             :key="key"
                         >
-                        {{ departamento.nombre }}
+                            {{ departamento.nombre }}
                         </ion-select-option>
                     </ion-select>
                 </ion-item>
@@ -516,6 +516,9 @@
                 </ion-item>
                 <newregister2 @changeData="loadNewRegister"></newregister2>
                 <ion-item>
+                    <ion-button @click="getCurrentPosition()">
+                        Capturar ubicación
+                    </ion-button>
                     <ion-label position="stacked">Ubicación GPS</ion-label>
                     <ion-input
                         type="number"
@@ -541,7 +544,13 @@
                         <ion-icon name="bug-outline"></ion-icon>
                         Tomar Foto
                     </ion-button>
-                    <input type="file" accept="image/*" ref="inputFile" style="display: none" @change="handleFileChange">
+                    <input
+                        type="file"
+                        accept="image/*"
+                        ref="inputFile"
+                        style="display: none"
+                        @change="handleFileChange"
+                    />
                 </ion-item>
                 <ion-item v-if="form.foto">
                     <img :src="form.foto" alt="Foto" />
@@ -881,15 +890,15 @@
 
 <script>
 import fn from "../../services";
+import {Plugins} from "@capacitor/core";
 import {required} from "vuelidate/lib/validators";
-import {Plugins, CameraResultType} from "@capacitor/core";
-import newregister2 from "./newregister2.vue"
 import localdata from "../../services/localdata";
+import newregister2 from "./newregister2.vue";
 
-const {Camera} = Plugins;
+const {Geolocation} = Plugins;
+
 export default {
-
-    components: { newregister2 },
+    components: {newregister2},
     validations: {
         form: {
             donde_toma_agua: {required},
@@ -900,6 +909,7 @@ export default {
     },
     data() {
         return {
+            isAvailbleGPS: false,
             form: {
                 foto: null,
                 finalizado: false,
@@ -1042,16 +1052,34 @@ export default {
     },
     computed: {
         municipios() {
-
-            if(this.form.departamento == '') {
+            if (this.form.departamento == "") {
                 return [];
             }
-            const departamentoFind = this.arrayDepartamentos.find(departamento =>
-                                            departamento.id == this.form.departamento);
+            const departamentoFind = this.arrayDepartamentos.find(
+                (departamento) => departamento.id == this.form.departamento
+            );
             return departamentoFind.tbl_municipios;
-        }
+        },
     },
     methods: {
+        async checkPermission() {
+
+            const status = await Geolocation.requestPermissions();
+            if (status && status.location === "granted") {
+                this.isAvailableGPS = true;
+            } else {
+                console.error("El usuario ha denegado el acceso a la ubicación.");
+            }
+        },
+        async getCurrentPosition() {
+            if (this.isAvailableGPS) {
+                const coordinates = await Geolocation.getCurrentPosition();
+                console.log("Current", coordinates);
+            } else {
+                console.error("No se han concedido los permisos de ubicación.");
+            }
+        },
+
         loadNewRegister(data) {
             this.form.newRegister = data.form;
         },
@@ -1127,14 +1155,17 @@ export default {
         },
     },
     mounted() {
+        this.checkPermission();
         let data = fn.usuarioLoad();
         this.form.codigo = data.actual;
 
         const departamentos = fn.departamentosGet();
 
         departamentos.sort((a, b) => a.nombre.localeCompare(b.nombre));
-        departamentos.forEach(item => {
-            item.tbl_municipios.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        departamentos.forEach((item) => {
+            item.tbl_municipios.sort((a, b) =>
+                a.nombre.localeCompare(b.nombre)
+            );
         });
 
         this.arrayDepartamentos = departamentos;
