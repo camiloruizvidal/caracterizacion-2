@@ -1,6 +1,7 @@
 'use strict'
 
 const Schema = use('Schema')
+const Database = use('Database')
 
 class AddNewColumnsToSchema extends Schema {
   up () {
