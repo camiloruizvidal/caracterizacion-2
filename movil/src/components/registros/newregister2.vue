@@ -538,16 +538,6 @@
             ></ion-input>
         </ion-item>
 
-        <!-- Clasificación de Pobreza -->
-        <ion-item>
-            <ion-label position="stacked">Clasificación de Pobreza</ion-label>
-            <ion-input
-                :value="form.clasificacion_pobreza"
-                @input="form.clasificacion_pobreza = $event.target.value"
-                type="text"
-            ></ion-input>
-        </ion-item>
-
         <!-- Proyecto de Vivienda -->
         <ion-item>
             <ion-label position="stacked">Proyecto de Vivienda</ion-label>

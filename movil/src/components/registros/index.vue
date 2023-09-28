@@ -17,9 +17,14 @@
                         <img v-else src="../../assets/danger.png" />
                     </ion-avatar>
                     <ion-lavel>
-                        Codigo de tarjeta familiar {{ item.codigo }}, Personas
-                        registradas {{ item.registros.length }} -
-                        {{ item.fechaProximaVisita }}
+                        * Codigo de tarjeta familiar {{ item.codigo }}
+                        <br />
+                        * Personas registradas {{ item.registros.length }}
+                        <br />
+                        * {{ getDataHeaderFamily(item) }}
+                        <br />
+                        * {{ item.fechaProximaVisita }}
+                        <br />
                     </ion-lavel>
                     <ion-lavel></ion-lavel>
                 </ion-item>
@@ -63,6 +68,17 @@ export default {
         },
     },
     methods: {
+        getDataHeaderFamily(item) {
+            const cabezaFamilia = item.registros.find(
+                (registro) => registro.persona.cabeza_familia
+            );
+            if (cabezaFamilia) {
+                return `${cabezaFamilia.persona.nombre_primero} ${cabezaFamilia.persona.apellido_primero}: ${cabezaFamilia.persona.documento}`;
+            } else {
+                return "No hay cabeza de familia registrado";
+            }
+        },
+
         registrarPacientes(codigo) {
             this.$router.push({name: "personasNew", params: {codigo: codigo}});
         },
