@@ -5,15 +5,15 @@ import axios from 'axios'
 axios.interceptors.request.use((config) => {
 	const vue = new Vue()
 
-	const token = vue.getToken()
+    const token = vue.getToken()
 
 	if(token) {
-		config.headers['Authorization'] = 'Bearer ' + encodeURIComponent(token);
+		config.headers['Authorization'] = 'Bearer ' + token
 	}
 
-	config.headers['Accept'] = 'application/json'
+    config.headers['Accept'] = 'application/json'
 
-	return config
+    return config
 	},
 	(err) => {
 		return Promise.reject(err)
@@ -22,8 +22,8 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use((res) => {
 		return res
-	},
-	(err) => {
+    },
+    (err) => {
 		console.log(err.response)
 		if (err.response.status === 401) {
 			// vue.router.replace('/login')
@@ -31,5 +31,5 @@ axios.interceptors.response.use((res) => {
 		}
 
 		return Promise.reject(err)
-	}
+  }
 )

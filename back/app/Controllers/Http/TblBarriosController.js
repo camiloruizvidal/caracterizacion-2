@@ -14,12 +14,13 @@ class TblBarriosController {
 	 * @param {Response} ctx.response
 	 * @param {View} ctx.view
 	 */
-	async index ({ request, response, view }) {
+	async index({ request, response, view }) {
 
 		const data = await Tbl_Barrios.query()
 			.where('active', true)
 			.with('tbl_departamento')
 			.with('tbl_municipio')
+			.with('tbl_registros_personales')
 			.fetch()
 
 		return response.sendSuccess(data, 'Lista de barrios')
@@ -30,7 +31,7 @@ class TblBarriosController {
 	 * POST tblbarrios
 	 *
 	 **/
-	async store ({ request, response }) {
+	async store({ request, response }) {
 		const { nombre, departamento_id, municipio_id } = request.all()
 
 		let data = {
@@ -41,7 +42,7 @@ class TblBarriosController {
 
 		const validated = await this.validate(data);
 
-		if(validated.fails()) {
+		if (validated.fails()) {
 			return response.sendError(validated.messages(), 'Error', 422)
 		}
 
@@ -59,7 +60,7 @@ class TblBarriosController {
 	 * @param {Response} ctx.response
 	 * @param {View} ctx.view
 	 */
-	async show ({ params, request, response, view }) {
+	async show({ params, request, response, view }) {
 		const { id } = params
 
 		const neighborhood = await Tbl_Barrios.find(id)
@@ -67,22 +68,22 @@ class TblBarriosController {
 		return response.sendSuccess(neighborhood, 'Detalle del barrio')
 	}
 
-	 /**
-	 * Update a tblBarrios.
-	 * PUT tblBarrios
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 */
-	  async update ({ params, request, response }) {
+	/**
+	* Update a tblBarrios.
+	* PUT tblBarrios
+	*
+	* @param {object} ctx
+	* @param {Request} ctx.request
+	* @param {Response} ctx.response
+	*/
+	async update({ params, request, response }) {
 		const { id } = params
 
 		const { nombre, departamento_id, municipio_id } = request.all()
 
 		const neighborhoods = await Tbl_Barrios.find(id)
 		neighborhoods.nombre = nombre
-		neighborhoods.departamento_id =departamento_id
+		neighborhoods.departamento_id = departamento_id
 		neighborhoods.municipio_id = municipio_id
 
 		await neighborhoods.save()
@@ -98,7 +99,7 @@ class TblBarriosController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-	async destroy ({ params, request, response }) {
+	async destroy({ params, request, response }) {
 		const { id } = params
 
 		const neighborhood = await Tbl_Barrios.find(id)
@@ -118,6 +119,20 @@ class TblBarriosController {
 		}
 
 		return await validate(data, rules)
+	}
+
+	async getPersonasPorBarrio({ response }) {
+		const data = await Tbl_Barrios.query()
+			.withCount('tbl_registros_personales')
+			.fetch();
+
+		const formattedData = data.toJSON().map(barrio => ({
+			id: barrio.id,
+			nombre: barrio.nombre,
+			count: barrio.__meta__.tbl_registros_personales_count
+		}));
+
+		return response.sendSuccess(formattedData, 'Lista de barrios');
 	}
 }
 

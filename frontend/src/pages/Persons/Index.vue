@@ -77,14 +77,48 @@
                   Resetear
                 </b-button>
                 <download-excel
+                  v-if="dataExportExcel.length > 0 ? true : false"
                   class="mt-3 ml-1 btn btn-sm btn-success"
                   :data="dataExportExcel"
                   :fields="json_fields"
-                  :worksheet="'Tarjetas familiares'"
-                  :name="'Tarjetas familiares.xls'"
+                  :worksheet="'Lista de personas'"
+                  :name="'Listado de personas.xls'"
                 >
                   <b-icon icon="file-earmark-excel"></b-icon>
                   Exportar
+                </download-excel>
+                <download-excel
+                  v-if="itemsPersonasPorBarrios.length > 0 ? true : false"
+                  class="mt-3 ml-1 btn btn-sm btn-success"
+                  :data="itemsPersonasPorBarrios"
+                  :fields="json_fields_2"
+                  :worksheet="'Filtro cantidad de personas por barrios'"
+                  :name="'PersonasPorBarrios.xls'"
+                >
+                  <b-icon icon="file-earmark-excel"></b-icon>
+                  Exportar personas por barrios
+                </download-excel>
+                <download-excel
+                  v-if="itemsPersonasPorVeredas.length > 0 ? true : false"
+                  class="mt-3 ml-1 btn btn-sm btn-success"
+                  :data="itemsPersonasPorVeredas"
+                  :fields="json_fields_2"
+                  :worksheet="'Filtro cantidad de personas por veredas'"
+                  :name="'PersonasPorVeredas.xls'"
+                >
+                  <b-icon icon="file-earmark-excel"></b-icon>
+                  Exportar personas por veredas
+                </download-excel>
+                <download-excel
+                  v-if="itemsPersonasPorRegimen.length > 0 ? true : false"
+                  class="mt-3 ml-1 btn btn-sm btn-success"
+                  :data="itemsPersonasPorRegimen"
+                  :fields="json_fields_3"
+                  :worksheet="'Filtro cantidad de personas por regimen'"
+                  :name="'PersonasPorRegimen.xls'"
+                >
+                  <b-icon icon="file-earmark-excel"></b-icon>
+                  Exportar cantidad por régimen
                 </download-excel>
               </b-col>
             </b-row>
@@ -183,7 +217,12 @@ export default {
         { key: "edad", label: "Edad" },
         { key: "tipo_ocupacion", label: "Ocupación" },
       ],
+      barrios: [],
+      veredas: [],
       items: [],
+      itemsPersonasPorBarrios: [],
+      itemsPersonasPorVeredas: [],
+      itemsPersonasPorRegimen: [],
       currentPage: 1,
       perPage: 20,
       loading: false,
@@ -193,7 +232,62 @@ export default {
       disabled: true,
       spinner: true,
       dataExportExcel: [],
-      json_fields: {},
+      json_fields: {
+        'Nombre1': 'nombre_primero', 
+        'Nombre2': 'nombre_segundo', 
+        'Apellido1':'apellido_primero', 
+        'Apellido2':'apellido_segundo',
+        'Tipo de documento':'documento_tipo',
+        'Documento':'documento',
+        'Régimen': 'regimen',
+        'EPS': 'nombre',
+        'Edad': {
+          field: 'fecha_nacimiento',
+          callback: (value) => {
+            let ageDifMs = Date.now() - new Date(value).getTime();
+            let ageDate = new Date(ageDifMs); // miliseconds from epoch
+            return Math.abs(ageDate.getUTCFullYear() - 1970);
+          }
+        }, 
+        'SEXO(F/M)':'genero', 
+        'VEREDA': {
+          field: 'vereda_id',
+          callback: (value) => {
+            if(value) {
+              const val = this.veredas.find(item => item.id == value);
+              return val.nombre;
+            } else {
+              return ''
+            }
+          }
+        },
+        'BARRIO':{
+          field: 'barrio_id',
+          callback: (value) => {
+            if(value) {
+              const val = this.barrios.find(item => item.id == value);
+              return val.nombre;
+            } else {
+              return ''
+            }
+          }
+        },
+      },
+      // json_fields: {},
+      json_fields_2: {
+        'Nombre': 'nombre', 
+        'Cantidad':'count', 
+      },
+      json_fields_3: {
+        'Nombre': 'nombre', 
+        'Cantidad':'cantidad',
+        'Porcentaje': {
+          field: 'porcentaje',
+          callback: (value) => {
+            return value + '%';
+          }
+        }, 
+      },
       form: {
         rango_edad: null,
         discapacidad: null,
@@ -305,6 +399,7 @@ export default {
       this.$http.getPersonas()
         .then(({ data: { data } }) => {
           this.assignValue(data);
+          this.dataExportExcel = data;
         })
         .catch(err => console.log(err));
 
@@ -321,28 +416,77 @@ export default {
       //     console.log(err);
       //   });
     },
+    async personasBarrios() {
+			this.loading = true
+			this.error = false
+			this.row = null
+
+			this.$http.getPersonasbarrios()
+			.then(res => {
+        this.itemsPersonasPorBarrios = res.data.data
+				this.loading = false
+			})
+			.catch(err => {
+				this.loading = false
+				this.error = true
+				console.log(err.response)
+			})
+		},
+    async personasVeredas() {
+			this.loading = true
+			this.error = false
+			this.row = null
+
+			this.$http.getPersonasVeredas()
+			.then(res => {
+        this.itemsPersonasPorVeredas = res.data.data;
+				this.loading = false
+			})
+			.catch(err => {
+				this.loading = false
+				this.error = true
+				console.log(err.response)
+			})
+		},
+    async personasRegimen() {
+			this.loading = true
+			this.error = false
+			this.row = null
+
+			this.$http.getPersonasRegimen()
+			.then(res => {
+        this.itemsPersonasPorRegimen = res.data.data;
+				this.loading = false
+			})
+			.catch(err => {
+				this.loading = false
+				this.error = true
+				console.log(err.response)
+			})
+		},
     assignValue(data) {
       this.items = [];
       const total = data.length;
       this.items = data;
+      console.log(data)
       this.totalRows = Number(total);
       this.currentPage = 1;
       this.perPage = 20;
       this.loading = false;
     },
-    async fieldsExcel() {
-      if (this.$store.getters.configurations.length == 0) {
-        await this.$store.dispatch("listConfigurations");
-      }
+    // async fieldsExcel() {
+    //   if (this.$store.getters.configurations.length == 0) {
+    //     await this.$store.dispatch("listConfigurations");
+    //   }
 
-      const configurations = this.$store.getters.configurations;
+    //   const configurations = this.$store.getters.configurations;
 
-      const config_export_excel = configurations.find(
-        (item) => item.key === "export_excel_tarjeta_familiar"
-      );
+    //   const config_export_excel = configurations.find(
+    //     (item) => item.key === "export_excel_tarjeta_familiar"
+    //   );
 
-      this.json_fields = this.transformInvertJson(config_export_excel.value);
-    },
+    //   this.json_fields = this.transformInvertJson(config_export_excel.value);
+    // },
     _calculateAge(birthday) { // birthday is a date
       let ageDifMs = Date.now() - birthday.getTime();
       let ageDate = new Date(ageDifMs); // miliseconds from epoch
@@ -370,20 +514,53 @@ export default {
         rango_edad: this.form.rango_edad?.value,
         sexo: this.form.sexo?.value,
         documento: this.form.documento,
-        embarazo: this.form.embarazo?.value,
+        embarazo: this.form.embarazo?.value == 'Si' ? true : false,
       }
 
       this.$http.getPersonasFiltered(data)
         .then(({ data: { persons } }) => {
           this.items = persons;
+          this.dataExportExcel = persons;
         })
         .catch(err => console.log(err));
 
+    },
+    async getBarrios() {
+			this.loading = true
+			this.error = false
+
+			this.$http.barrios()
+			.then(res => {
+				this.barrios = res.data.data
+				this.loading = false
+			})
+			.catch(err => {
+				this.loading = false
+				console.log(err.response)
+			})
+		},
+    getVeredas() {
+      this.$http.veredas().then((res) => {
+        this.veredas = res.data.data;
+      });
+    },
+  },
+  watch: {
+    'form.sexo': function() {
+      if(!this.form.sexo?.value || this.form.sexo?.value == 'M') {
+        this.form.embarazo.value = null;
+      } else {
+        this.form.embarazo.value = 'Si';
+      }
     }
   },
-  watch: {},
   mounted() {
     this.index();
+    this.personasBarrios();
+    this.personasVeredas();
+    this.getVeredas();
+    this.getBarrios();
+    this.personasRegimen();
     // this.getDepartamentos();
     // this.getVeredas();
     // this.getCorregimientos();

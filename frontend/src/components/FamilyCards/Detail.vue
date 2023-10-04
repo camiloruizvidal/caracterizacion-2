@@ -203,6 +203,7 @@
       <family-card-pdf
         :data="data"
         :items="items"
+        :dataParametros="dataParametros"
       ></family-card-pdf>
     </b-row>
     <b-row v-if="data">
@@ -264,6 +265,7 @@ export default {
     data: null,
     mortalidades: [],
     registrosPersonales: [],
+    dataParametros: null,
     items: [
       "iluminacion_adecuada",
       "ventilacion_adecuada",
@@ -320,6 +322,19 @@ export default {
           this.data = res.data.data;
           this.mortalidades = this.data.tbl_mortalidades;
           this.registrosPersonales = this.data.tbl_registros_personales;
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.loading = false;
+        });
+    },
+    parametrizacion() {
+      this.loading = true;
+      this.$http
+        .getParametrizacion()
+        .then((res) => {
+          this.dataParametros = res.data;
           this.loading = false;
         })
         .catch((err) => {
@@ -388,6 +403,7 @@ export default {
   },
   mounted() {
     this.index();
+    this.parametrizacion();
   },
 };
 </script>

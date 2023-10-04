@@ -4,21 +4,23 @@
 const Model = use('Model')
 
 class Tbl_Barrios extends Model {
-	static get table () {
-    return 'tbl_barrios'
-  }
+    static get table() {
+        return 'tbl_barrios'
+    }
 
-  tbl_departamento()
-  {
-      return this.hasOne('App/Models/TblDepartamento','departamento_id','id')
-      .select('id','nombre');
-  }
+    tbl_departamento() {
+        return this.hasOne('App/Models/TblDepartamento', 'departamento_id', 'id')
+            .select('id', 'nombre');
+    }
 
-  tbl_municipio()
-  {
-  return this.hasOne('App/Models/TblMunicipio','municipio_id','id')
-      .select('id','nombre','estado','departamento_id');
-	}
+    tbl_municipio() {
+        return this.hasOne('App/Models/TblMunicipio', 'municipio_id', 'id')
+            .select('id', 'nombre', 'estado', 'departamento_id');
+    }
+
+    tbl_registros_personales() {
+        return this.hasOne('App/Models/TblRegistrosPersonale', 'id', 'barrio_id');
+    }
 }
 
 module.exports = Tbl_Barrios
