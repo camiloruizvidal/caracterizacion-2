@@ -31,7 +31,7 @@
             <ion-item v-for="(item, index) in dataArray" :key="index">
                 <ion-label>
                     <ion-avatar slot="start" v-if="'undefined'!= (typeof item.isSend)" >
-                        <img v-if="item.isSend" src="../../assets/success.png"/>
+                        <img v-if="item.isSend" src="../../assets/success.png" />
                         <img v-else src="../../assets/danger.png" />
                     </ion-avatar>
                     Codigo {{ item.codigo }}. Registros{{
