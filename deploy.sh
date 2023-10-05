@@ -2,11 +2,7 @@
 
 export FORCE_COLOR=true
 
-if [[ "$GITHUB_ACTIONS" == "true" ]]; then
-  echo "Se está realizando el despliegue en GitHub Actions."
-fi
-
-timestamp=$(date +"%Y%m%d_%H%M%S")
+timestamp=$(date +"%Y_%m_%d_%H_%M_%S")
 
 log_file="/var/www/html/caracterizacion/caracterizacion-2/logsDeploy/deploy_$timestamp.log"
 frontend_dir="/var/www/html/caracterizacion/caracterizacion-2/frontend"
