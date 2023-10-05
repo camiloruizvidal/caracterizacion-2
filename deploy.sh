@@ -4,7 +4,7 @@ export FORCE_COLOR=true
 
 timestamp=$(date +"%Y_%m_%d_%H_%M_%S")
 
-log_file="/var/www/html/caracterizacion/caracterizacion-2/logsDeploy/deploy_$timestamp.log"
+log_file="/var/www/html/caracterizacion/caracterizacion-2/logsDeploy/deploy[$timestamp].log"
 frontend_dir="/var/www/html/caracterizacion/caracterizacion-2/frontend"
 backend_dir="/var/www/html/caracterizacion/caracterizacion-2/back"
 
