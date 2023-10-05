@@ -1,8 +1,13 @@
 #!/bin/bash
 
+timestamp=$(date +"%Y%m%d_%H%M%S")
 
+log_file="/var/www/html/caracterizacion/logsDeploy/deploy_$timestamp.log"
 frontend_dir="/var/www/html/caracterizacion/caracterizacion-2/frontend"
 backend_dir="/var/www/html/caracterizacion/caracterizacion-2/back"
+
+exec > >(tee -a "$log_file")
+exec 2>&1
 
 echo "Iniciando el proceso..."
 
