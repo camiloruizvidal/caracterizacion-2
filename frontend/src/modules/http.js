@@ -63,6 +63,9 @@ export default function(Vue) {
 		veredas() {
 			return get(`veredas`)
 		},
+		getPersonasVeredas() {
+			return get(`cantidad-personas-veredas`)
+		},
 		corregimientos() {
 			return get(`corregimientos`)
 		},
@@ -105,6 +108,9 @@ export default function(Vue) {
 		borraBarrio(id) {
 			return del(`barrios/${id}`)
 		},
+		getPersonasbarrios() {
+			return get(`cantidad-personas-barrios`)
+		},
 		cargarRegistrosRecibidos() {
 			return get(`log/cargarRegistrosRecibidos`)
 		},
@@ -116,8 +122,13 @@ export default function(Vue) {
 		},
 		getPersonasFiltered(data) {
 			return post(`filter-persons`, data);
-		}
-
+		},
+		getParametrizacion() {
+			return get(`parametrizacion`)
+		},
+		getPersonasRegimen() {
+			return get(`cantidad-personas-regimen`)
+		},
 	}
 
 	Object.defineProperties(Vue.prototype,{

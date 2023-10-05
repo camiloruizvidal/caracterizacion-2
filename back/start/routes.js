@@ -45,6 +45,7 @@ Route.group(() => {
 	Route.get('/medicamentos', 'TblMedicamentoController.index')
 	Route.get('/personas', 'TblPersonaController.index')
 	Route.resource('/barrios', 'TblBarriosController')
+	Route.resource('/parametrizacion', 'TblParametrizacionController')
 
 	Route.post('/tarjetas/buscar', 'TblTarjetaController.search')
 	Route.resource('configuraciones', 'TblConfiguracionController').apiOnly()
@@ -62,6 +63,10 @@ Route.group(() => {
 	Route.post('/reset-password/:id', 'UserController.resetPass');
 	Route.get('/log/cargarRegistrosRecibidos', 'TblLogController.cargarRegistrosRecibidos')
 	Route.post('/log/guardarRegistrosRecibidos', 'TblLogController.guardarRegistrosRecibidos')
+
+	Route.get('/cantidad-personas-barrios', 'TblBarriosController.getPersonasPorBarrio');
+	Route.get('/cantidad-personas-veredas', 'TblVeredaController.getPersonasPorVereda');
+	Route.get('/cantidad-personas-regimen', 'TblPersonaController.getPersonasPorRegimen');
 })
 .prefix('api/v1')
 .middleware(['auth:jwt'])
