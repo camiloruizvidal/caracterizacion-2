@@ -8,7 +8,7 @@ fi
 
 timestamp=$(date +"%Y%m%d_%H%M%S")
 
-log_file="/var/www/html/caracterizacion/logsDeploy/deploy_$timestamp.log"
+log_file="/var/www/html/caracterizacion/caracterizacion-2/logsDeploy/deploy_$timestamp.log"
 frontend_dir="/var/www/html/caracterizacion/caracterizacion-2/frontend"
 backend_dir="/var/www/html/caracterizacion/caracterizacion-2/back"
 
