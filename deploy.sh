@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export FORCE_COLOR=true
+
 if [[ "$GITHUB_ACTIONS" == "true" ]]; then
   echo "Se está realizando el despliegue en GitHub Actions."
 fi
