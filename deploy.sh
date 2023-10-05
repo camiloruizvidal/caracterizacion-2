@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [[ "$GITHUB_ACTIONS" == "true" ]]; then
+  echo "Se está realizando el despliegue en GitHub Actions."
+fi
+
 timestamp=$(date +"%Y%m%d_%H%M%S")
 
 log_file="/var/www/html/caracterizacion/logsDeploy/deploy_$timestamp.log"
