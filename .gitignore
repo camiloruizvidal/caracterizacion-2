@@ -4,3 +4,4 @@ movil/package-lock.json
 back/package-lock.json
 SICP2_4/app/src/main/assets/*
 logsDeploy/*
+movil/dist/*
