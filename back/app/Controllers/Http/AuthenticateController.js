@@ -49,16 +49,54 @@ class AuthenticateController {
         const siValido = await Hash.verify(request.input('pass'), pass)
         if(siValido)
         {
-            let codigos = await Database
+            let codigosTarjetasFamiliares = await Database
+            .select('codigo')
+            .from('tbl_tarjetas_familiares')
+            .pluck('codigo');
+
+            let codigosUsuarios = await Database
             .select('inicio', 'fin')
             .from('tbl_codigos_users')
             .where('user_id',user.id)
 
-            if(user.actual === null ) {
-              if(codigos.length>0) {
-                user.actual = codigos[0].inicio;
-              }
+            codigosTarjetasFamiliares = codigosTarjetasFamiliares.map(codigo => parseInt(codigo));
+
+            let codigos = [];
+            let inicioRango = null;
+            let finRango = null;
+
+            codigosUsuarios.forEach(({ inicio, fin }) => {
+                for (let i = inicio; i <= fin; i++) {
+                    let codigo = parseInt(i);
+                    if (!codigosTarjetasFamiliares.includes(codigo)) {
+                        if (inicioRango === null) {
+                            inicioRango = codigo;
+                            finRango = codigo;
+                        } else {
+                            finRango = codigo;
+                        }
+                    } else {
+                        if (inicioRango !== null) {
+                            codigos.push({ inicio: inicioRango, fin: finRango });
+                            inicioRango = null;
+                            finRango = null;
+                        }
+                    }
+                }
+            });
+
+            if (inicioRango !== null) {
+                codigos.push({ inicio: inicioRango, fin: finRango });
             }
+
+            if (user.actual === null) {
+                if (codigos.length > 0) {
+                    user.actual = codigos[0].inicio;
+                }
+            }
+
+console.log({ codigos, codigosTarjetasFamiliares });
+
             responseData.user={
                 actual:user.actual,
                 id:user.id,
