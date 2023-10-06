@@ -18,38 +18,38 @@ const routes = [
     path: '/registros',
     name: 'registros',
     component: registros,
-    meta:{title:'Registros'}
+    meta: { title: 'Registros' }
   },
   {
     path: '/registros/new',
     name: 'registrosNew',
     component: registrosNew,
-    meta:{title:'Nuevo registro'}
+    meta: { title: 'Nuevo registro' }
   },
   {
     path: '/registros/persona/:codigo',//codigo de la tarjeta
     name: 'personasNew',
     component: personasNew,
-    meta:{title:'Registrando datos personales'}
+    meta: { title: 'Registrando datos personales' }
   },
   {
     path: '/configurar',//codigo de la tarjeta
     name: 'configurar',
     component: configurar,
-    meta:{title:'Conexión al servidor'}
+    meta: { title: 'Conexión al servidor' }
   },
   {
     path: '/enviar',//codigo de la tarjeta
     name: 'enviar',
     component: enviar,
-    meta:{title:'Enviar registros'}
+    meta: { title: 'Enviar registros' }
   },
-  
+
   {
     path: '/',
     name: 'login',
     component: login,
-    meta:{title:'Login'}
+    meta: { title: 'Login' }
   },
 
   {

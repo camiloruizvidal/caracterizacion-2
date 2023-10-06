@@ -147,7 +147,6 @@ export default {
                 value.isSend = typeof rows[index] != 'undefined';
                 return value
             })
-            console.log({dataArray: this.dataArray});
         }
     },
     mounted() {

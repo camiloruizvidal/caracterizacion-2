@@ -520,7 +520,6 @@
                 </ion-item>
                 <newregister2 @changeData="loadNewRegister"></newregister2>
                 <ion-item>
-                    {coordinates:{{ coordinates }}}
                     <ion-button @click="getCurrentPosition()">
                         Capturar ubicación
                     </ion-button>
@@ -1210,6 +1209,9 @@ export default {
     async mounted() {
         this.checkPermission();
         let data = fn.usuarioLoad();
+        if(data == null) {
+            this.$router.push({ name: 'login' });
+        }
         this.form.codigo = data.actual;
 
         const departamentos = fn.departamentosGet();

@@ -450,7 +450,6 @@ export default {
             deep: true,
             handler(form) {
                 this.$emit("changeData", {form});
-                console.log({form});
             },
         },
     },
