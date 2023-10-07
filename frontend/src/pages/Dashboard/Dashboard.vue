@@ -67,7 +67,7 @@ export default {
 
 			Swal.fire({
 				title: 'Subiendo archivos desde el log',
-				text: 'Por favor espere mientras se cargan',
+				text: 'Por favor espere mientras se cargan, esto puede tardar unos minutos',
 				timerProgressBar: true,
 				didOpen: () => Swal.showLoading()
 			})
