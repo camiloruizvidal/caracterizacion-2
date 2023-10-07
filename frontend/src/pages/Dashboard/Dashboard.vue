@@ -90,13 +90,15 @@ export default {
 				didOpen: () => Swal.showLoading()
 			})
 
-			let me = this;
-			await this.registerLoaded.forEach(async value => {
+			setTimeout(async () => {
+				let me = this;
+				await this.registerLoaded.forEach(async value => {
 				if(value.check) {
 					await me.$http.guardarRegistrosRecibidos(value.value)
 				}
 			});
 			Swal.close()
+			}, 1);
 
 		},
 		getClock() {

@@ -32,7 +32,7 @@ class TblTarjetaController {
 	{
 		let data =null;
 		let search = await Database.from('tbl_tarjetas_familiares')
-			.where('codigo', request.input('codigo'))
+			.where('codigo', Number(request.input('codigo')))
 			.first()
 
 		if(typeof search =='undefined') {
@@ -135,12 +135,14 @@ class TblTarjetaController {
       data.tratamiento_agua = newRegister2.tratamiento_agua;
       data.que_hace_res_organicos = newRegister2.que_hace_res_organicos;
       data.que_hace_res_peligrosos = newRegister2.que_hace_res_peligrosos;
-      data.moscas = newRegister2.moscas;
-      data.pulgas = newRegister2.pulgas;
-      data.garrapatas = newRegister2.garrapatas;
-      data.cinches = newRegister2.cinches;
-      data.niguas = newRegister2.niguas;
-      data.control_vectores = newRegister2.control_vectores;
+
+      data.moscas = newRegister2.form.moscas;
+      data.pulgas = newRegister2.form.pulgas;
+      data.garrapatas = newRegister2.form.garrapatas;
+      data.cinches = newRegister2.form.cinches;
+      data.niguas = newRegister2.form.niguas;
+      data.control_vectores = newRegister2.form.control_vectores;
+
       data.realizo_control_vectores_institucion = newRegister2.realizo_control_vectores_institucion;
       data.focos_contaminacion = newRegister2.focos_contaminacion;
       data.carroneros_serca_vivienda = newRegister2.carroneros_serca_vivienda;
