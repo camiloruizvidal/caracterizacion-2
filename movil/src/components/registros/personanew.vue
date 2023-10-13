@@ -1744,6 +1744,9 @@
             <ion-icon name="bug-outline"></ion-icon>
             Guardar registro
         </ion-button>
+        <ion-card v-if="isShowImages">
+            <images3280 :form="form" :key="keyForm"/>
+        </ion-card>
     </div>
 </template>
 
@@ -1751,11 +1754,22 @@
 import {required, minLength, between} from "vuelidate/lib/validators";
 import fn from "../../services";
 import newregister from "./newregister.vue";
+import images3280 from './images3280.vue'
 import localdata from "../../services/localdata";
 export default {
-    components: {newregister},
+    components: { newregister, images3280 },
+    watch: {
+        form: {
+            handler() {
+                this.keyForm = this.keyForm + 1;
+            },
+            deep: true,
+        },
+    },
     data() {
         return {
+            keyForm: 1,
+            isShowImages: false,
             arrayEPS: [],
             verMedicamentos: false,
             verEnfermedades: false,
@@ -2027,6 +2041,7 @@ export default {
             );
             resultado[idx].encuestas[idx2].registros.push(this.form);
             localdata.setItem("encuestas", JSON.stringify(resultado));
+            this.isShowImages = true;
             return this.$ionic.alertController
                 .create({
                     cssClass: "my-custom-class",
@@ -2039,6 +2054,7 @@ export default {
         },
     },
     mounted() {
+        this.isShowImages = false;
         this.codigo = parseInt(this.$route.params.codigo);
         let resultado = JSON.parse(localdata.getItem("encuestas"));
         let usuario = JSON.parse(localdata.getItem("usuario"));

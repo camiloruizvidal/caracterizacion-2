@@ -123,15 +123,14 @@ export default new class functions {
 		let server = this.serverAll();
 		let response = false;
 		if (server !== null) {
-			response = server.server + ':' + server.port + '/api/v1/';
+			response = server.server + '/api/v1/';
 		}
 		return response;
 	}
 
-	serverSet(server, port, pass) {
+	serverSet(server, pass) {
 		localdata.setItem('server', JSON.stringify({
 			server: server,
-			port: port,
 			pass: pass
 		}));
 	}
@@ -154,7 +153,7 @@ export default new class functions {
 				resolve(false);
 			} else {
 				await axios
-					.get(server.server + ':' + server.port)
+					.get(server.server)
 					.then(response => {
 						resolve(true)
 					})

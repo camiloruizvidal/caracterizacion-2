@@ -17,14 +17,6 @@
                     ></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Puerto</ion-label>
-                    <ion-input
-                        :value="form.port"
-                        @input="form.port = $event.target.value"
-                        type="number"
-                    ></ion-input>
-                </ion-item>
-                <ion-item>
                     <ion-label position="stacked">contraseña</ion-label>
                     <ion-input
                         :value="form.pass"
@@ -50,7 +42,6 @@ export default {
         return {
             form: {
                 server: "",
-                port: "",
                 pass: "",
             },
         };
@@ -60,7 +51,6 @@ export default {
             fn.serverDelete();
             this.form = {
                 server: "",
-                port: "",
                 pass: "",
             };
             this.$ionic.alertController
@@ -76,10 +66,9 @@ export default {
         guardar() {
             if (
                 this.form.server != "" &&
-                this.form.port != "" &&
                 this.form.pass != ""
             ) {
-                fn.serverSet(this.form.server, this.form.port, this.form.pass);
+                fn.serverSet(this.form.server, this.form.pass);
                 this.$ionic.alertController
                     .create({
                         cssClass: "my-custom-class",
@@ -104,7 +93,7 @@ export default {
     mounted() {
         let server = fn.serverAll();
         if (server === false) {
-            fn.serverSet(this.form.server, this.form.port, this.form.pass);
+            fn.serverSet(this.form.server, this.form.pass);
             server = fn.serverAll();
         }
         this.form = server;

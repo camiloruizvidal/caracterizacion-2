@@ -2,5 +2,5 @@
   "htmlWhitespaceSensitivity": "ignore",
   "printWidth": 80,
   "tabWidth": 4,
-  "bracketSpacing": false
+  "bracketSpacing": true
 }
