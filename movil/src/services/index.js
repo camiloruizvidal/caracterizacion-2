@@ -82,11 +82,12 @@ export default new class functions {
 							me.departamentosSet(data.data.departamentos);
 							me.corregimientosSet(data.data.corregimientos);
 							me.veredasSet(data.data.veredas);
+							resolve(data.validate)
 						}
-						resolve(data.validate)
+						reject(false);
 					})
 					.catch(r => {
-						resolve(false);
+						reject(false);
 					})
 			})
 		} else {

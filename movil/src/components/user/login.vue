@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { IonLoading } from '@ionic/vue';
 import fn from "../../services/index";
 export default {
     data() {
@@ -45,8 +46,22 @@ export default {
 			isConfigureConection: false,
         };
     },
+	components: {
+		IonLoading
+	},
     methods: {
         async iniciar() {
+			return this.$ionic.loadingController
+			.create({
+				message: 'Iniciando sesión,',
+				duration: this.timeout,
+			})
+			.then(loading => {
+				this.iniciarSesion(loading);
+				return loading.present()
+			})
+		},
+		async iniciarSesion(loading) {
             try {
                 let response = await fn.usuarioLogin(
                     this.form.login,
@@ -59,23 +74,25 @@ export default {
                         .create({
                             cssClass: "my-custom-class",
                             header: "Error",
-                            message: "No se pudo ingresar.",
+                            message: "No se pudo ingresar. Usuario o contraseña invalidos.",
                             buttons: ["OK"],
                         })
                         .then((a) => a.present());
                 }
+				loading.dismiss();
             } catch (error) {
                 this.$ionic.alertController
-                    .create({
-                        cssClass: "my-custom-class",
-                        header: "Error",
-                        message:
-                            "No se pudo ingresar. (" +
-                            JSON.stringify(error) +
-                            ")",
-                        buttons: ["OK"],
-                    })
-                    .then((a) => a.present());
+				.create({
+					cssClass: "my-custom-class",
+					header: "Error",
+					message:
+						"No se pudo ingresar. (" +
+						JSON.stringify(error) +
+						")",
+					buttons: ["OK"],
+				})
+				.then((a) => a.present());
+				loading.dismiss();
             }
         },
         register() {
