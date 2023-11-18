@@ -132,8 +132,11 @@
                         "
                         :value="form.vivienda_tenencia"
                     >
-                        <ion-select-option value="Propia">
+                        <ion-select-option value="Alquilada">
                             Alquilada
+                        </ion-select-option>
+                        <ion-select-option value="Propia">
+                            Propia
                         </ion-select-option>
                         <ion-select-option value="Invasión">
                             Invasión

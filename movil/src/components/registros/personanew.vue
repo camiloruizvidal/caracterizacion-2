@@ -20,7 +20,9 @@
                         ></ion-checkbox>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="stacked">Genero</ion-label>
+                        <ion-label position="stacked">
+                            <i class="r">*</i> Genero
+                        </ion-label>
                         <ion-select
                             @ionChange="
                                 form.persona.genero = $event.target.value
@@ -193,6 +195,7 @@
                     </ion-item>
                     <ion-item>
                         <ion-label position="stacked">
+                            <i class="r">*</i> 
                             Fecha de nacimiento
                         </ion-label>
                         <ion-datetime
@@ -348,7 +351,9 @@
                         </ion-select>
                     </ion-item>
                     <ion-item>
-                        <ion-label position="stacked">Primer nombre</ion-label>
+                        <ion-label position="stacked">
+                            <i class="r">*</i> Primer nombre
+                            </ion-label>
                         <ion-input
                             @input="
                                 form.persona.nombre_primero =
@@ -369,6 +374,7 @@
                     </ion-item>
                     <ion-item>
                         <ion-label position="stacked">
+                            <i class="r">*</i> 
                             Primer apellido
                         </ion-label>
                         <ion-input
@@ -1730,6 +1736,7 @@
             v-if="estado != 'otros'"
             color="warning"
             @click="Siguiente()"
+            :disabled="isDisabledNextButton"
             expand="full"
         >
             <ion-icon name="bug-outline"></ion-icon>
@@ -1765,6 +1772,18 @@ export default {
             },
             deep: true,
         },
+    },
+    computed: {
+        isDisabledNextButton() {
+            if(this.estado == 'persona') {
+                return this.form.persona.genero == ''
+                    && this.form.persona.fecha_nacimiento == ''
+                    && this.form.persona.nombre_primero == ''
+                    && this.form.persona.apellido_primero == ''
+            } else {
+                return false;
+            }
+        }
     },
     data() {
         return {

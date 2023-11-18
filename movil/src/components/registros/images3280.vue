@@ -5,22 +5,39 @@
                 :href="require(`@/assets/images/3280/${imagePath}`)"
                 :download="getFileName(imagePath)"
             >
-                <img :src="require(`@/assets/images/3280/${imagePath}`)" alt="Image" />
+                <img :src="require(`@/assets/images/3280/${imagePath}`)" alt="Image" @load="imagenCargada"/>
             </a>
             <br>
         </div>
+        <ion-button
+            v-if="images.length>0"
+            color="warning"
+            @click="recragarPagina()"
+            expand="full"
+        >
+            <ion-icon name="skull-outline"></ion-icon>
+            Nuevo usuario
+        </ion-button>
     </div>
 </template>
 
 <script>
+import { IonLoading } from '@ionic/vue';
+
 export default {
     name: "images3280",
 
     data() {
         return {
-            images: []
+            loading: '',
+            images: [],
+            imagenesCargadas: 0,
         };
     },
+
+	components: {
+		IonLoading
+	},
 
     props: ["form"],
 
@@ -40,41 +57,6 @@ export default {
             return parts[parts.length - 1];
         },
 
-        searchImages(edad, genero, isEmbarazo) {
-
-            isEmbarazo = isEmbarazo === undefined ? false : isEmbarazo;
-
-            if (isNaN(edad)) {
-                return [];
-            }
-
-            if (genero === "") {
-                return [];
-            }
-
-            const filteredData = this.allImages.filter((item) => {
-
-                return (
-                    item.edad.min <= edad &&
-                    item.edad.max >= edad &&
-                    item.genero.includes(genero) &&
-                    item.embarazo === isEmbarazo
-                );
-
-            });
-
-            const concatenatedData = [].concat(...filteredData.map((item) => {
-                return item.value.map((value) => {
-                    return `${item.name}/${value}`;
-                });
-            }));
-
-
-            return concatenatedData;
-        },
-    },
-
-    computed: {
         allImages() {
             return [
                 {
@@ -184,14 +166,84 @@ export default {
                 },
             ];
         },
-    },
-    mounted() {
 
+        searchImages(edad, genero, isEmbarazo) {
+            console.log({allImages: this.allImages()})
+
+            isEmbarazo = isEmbarazo === undefined ? false : isEmbarazo;
+
+            if (isNaN(edad)) {
+                return [];
+            }
+
+            if (genero === "") {
+                return [];
+            }
+            console.log('Empieza el filter');
+            const filteredData = this.allImages().filter((item) => {
+
+                console.log({
+                    'item.edad.min <= edad &&': item.edad.min <= edad,
+                    'item.edad.max >= edad &&': item.edad.max >= edad,
+                    'item.genero.includes(genero) &&': item.genero.includes(genero),
+                    'item.embarazo === isEmbarazo': item.embarazo === isEmbarazo,
+                    validate: item.edad.min <= edad &&
+                    item.edad.max >= edad &&
+                    item.genero.includes(genero) &&
+                    item.embarazo === isEmbarazo
+                })
+                return (
+                    item.edad.min <= edad
+                    && item.edad.max >= edad
+                    && item.genero.includes(genero)
+                    //&& item.embarazo === isEmbarazo
+                );
+
+            });
+
+            const concatenatedData = [].concat(...filteredData.map((item) => {
+                return item.value.map((value) => {
+                    return `${item.name}/${value}`;
+                });
+            }));
+
+
+            return concatenatedData;
+        },
+
+        recragarPagina() {
+            window.location.reload();
+        },
+
+        async showLoading() {
+            await this.$ionic.loadingController
+			.create({
+				message: 'Cargando imagenes. '
+                            + 'Por favor espere, este proceso puede demorarse unos '
+                            + 'dependiendo del modelo de su dispositivo y sus capacidades.'
+			}).then((loading) => {
+                this.loading = loading;
+                loading.present()
+            });
+        },
+
+        imagenCargada() {
+            this.imagenesCargadas++;
+
+            if (this.imagenesCargadas === this.images.length) {
+                this.loading.dismiss();
+            }
+        }
+    },
+
+    async mounted() {
+        await this.showLoading();
         this.images = this.searchImages(
             this.calcularEdad(this.form.persona.fecha_nacimiento),
             this.form.persona.genero,
             true//this.form.salud_sexual_reproductiva_embarazo
         );
+
     },
 };
 </script>
