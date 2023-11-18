@@ -1940,12 +1940,19 @@ export default {
             this.form.newRegister = data.form;
         },
         calcularEdad() {
-            const fechaNacimiento = moment(this.form.persona.fecha_nacimiento);
             const ahora = moment();
+            const fechaNacimiento = moment(this.form.persona.fecha_nacimiento);
+            const cumpleanosHoy = fechaNacimiento.month() === ahora.month()
+                                    && fechaNacimiento.date() === ahora.date();
 
             const years = ahora.diff(fechaNacimiento, 'years');
             const months = ahora.diff(fechaNacimiento, 'months') % 12;
             const days = ahora.diff(fechaNacimiento, 'days') % 30;
+
+            if (years === 0 && months === 0 && days === 0) {
+                this.form.persona.edad = 'Recién nacido';
+                return;
+            }
 
             let resultado = '';
 
@@ -1959,6 +1966,10 @@ export default {
 
             if (days > 0) {
                 resultado += ` ${days} ${days === 1 ? 'día' : 'días'}`;
+            }
+
+            if (cumpleanosHoy) {
+               resultado = `Felices cumpleaños número ${years}`;
             }
 
             this.form.persona.edad = resultado.trim();
