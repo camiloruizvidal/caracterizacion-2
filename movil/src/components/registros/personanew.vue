@@ -195,7 +195,7 @@
                     </ion-item>
                     <ion-item>
                         <ion-label position="stacked">
-                            <i class="r">*</i> 
+                            <i class="r">*</i>
                             Fecha de nacimiento
                         </ion-label>
                         <ion-datetime
@@ -1758,7 +1758,7 @@
 </template>
 
 <script>
-import {required, minLength, between} from "vuelidate/lib/validators";
+import moment from 'moment';
 import fn from "../../services";
 import newregister from "./newregister.vue";
 import images3280 from './images3280.vue'
@@ -1940,79 +1940,29 @@ export default {
             this.form.newRegister = data.form;
         },
         calcularEdad() {
-            let dateString = this.form.persona.fecha_nacimiento;
-            dateString = dateString.split("T")[0];
-            var now = new Date();
-            var today = new Date(now.getYear(), now.getMonth(), now.getDate());
-            var yearNow = now.getYear();
-            var monthNow = now.getMonth();
-            var dateNow = now.getDate();
-            var dob = new Date(
-                dateString.split("-")[0],
-                dateString.split("-")[1],
-                dateString.split("-")[2]
-            );
-            var yearDob = dob.getYear();
-            var monthDob = dob.getMonth();
-            var dateDob = dob.getDate();
-            var age = {};
-            var ageString = "";
-            var yearString = "";
-            var monthString = "";
-            var dayString = "";
-            let yearAge = yearNow - yearDob;
-            if (monthNow >= monthDob) var monthAge = monthNow - monthDob;
-            else {
-                yearAge--;
-                var monthAge = 12 + monthNow - monthDob;
+            const fechaNacimiento = moment(this.form.persona.fecha_nacimiento);
+            const ahora = moment();
+
+            const years = ahora.diff(fechaNacimiento, 'years');
+            const months = ahora.diff(fechaNacimiento, 'months') % 12;
+            const days = ahora.diff(fechaNacimiento, 'days') % 30;
+
+            let resultado = '';
+
+            if (years > 0) {
+                resultado += `${years} ${years === 1 ? 'año' : 'años'}`;
             }
-            if (dateNow >= dateDob) var dateAge = dateNow - dateDob;
-            else {
-                monthAge--;
-                var dateAge = 31 + dateNow - dateDob;
-                if (monthAge < 0) {
-                    monthAge = 11;
-                    yearAge--;
-                }
+
+            if (months > 0) {
+                resultado += ` ${months} ${months === 1 ? 'mes' : 'meses'}`;
             }
-            age = {
-                years: yearAge,
-                months: monthAge,
-                days: dateAge,
-            };
-            if (age.years > 1) yearString = " años";
-            else yearString = " año";
-            if (age.months > 1) monthString = " meses";
-            else monthString = " mes";
-            if (age.days > 1) dayString = " dias";
-            else dayString = " dia";
-            if (age.years > 0 && age.months > 0 && age.days > 0)
-                ageString =
-                    age.years +
-                    yearString +
-                    ", " +
-                    age.months +
-                    monthString +
-                    ", and " +
-                    age.days +
-                    dayString;
-            else if (age.years == 0 && age.months == 0 && age.days > 0)
-                ageString = "Only " + age.days + dayString;
-            else if (age.years > 0 && age.months == 0 && age.days == 0)
-                ageString = age.years + yearString + ". Feliz cumpleaños!!";
-            else if (age.years > 0 && age.months > 0 && age.days == 0)
-                ageString =
-                    age.years + yearString + " y " + age.months + monthString;
-            else if (age.years == 0 && age.months > 0 && age.days > 0)
-                ageString =
-                    age.months + monthString + " y " + age.days + dayString;
-            else if (age.years > 0 && age.months == 0 && age.days > 0)
-                ageString =
-                    age.years + yearString + " y " + age.days + dayString;
-            else if (age.years == 0 && age.months > 0 && age.days == 0)
-                ageString = age.months + monthString;
-            else ageString = "";
-            this.form.persona.edad = ageString;
+
+            if (days > 0) {
+                resultado += ` ${days} ${days === 1 ? 'día' : 'días'}`;
+            }
+
+            this.form.persona.edad = resultado.trim();
+
         },
         agregarMedicamentos() {
             this.form.arrayMedicamentos.push(this.medicamentos);
