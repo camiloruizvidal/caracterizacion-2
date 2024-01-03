@@ -1,36 +1,36 @@
 <template>
-    <ion-content>
-        <ion-card>
-            <ion-card-header>
-                <ion-card-title>Login</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-                <ion-item>
-                    <ion-label>Usuario</ion-label>
-                    <ion-input
-                        :value="form.login"
-                        @input="form.login = $event.target.value"
-                    ></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label>Contraseña</ion-label>
-                    <ion-input
-                        :value="form.pass"
-                        @input="form.pass = $event.target.value"
-                        type="password"
-                    ></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-button @click="iniciar" expand="full" :disabled="!isConfigureConection">
-                        Iniciar
-                    </ion-button>
-					<ion-label class="normal-text" color="danger" v-if="!isConfigureConection">
-                        Por favor configure primero los datos de conexión.
-                    </ion-label>
-                </ion-item>
-            </ion-card-content>
-        </ion-card>
-    </ion-content>
+    <div>
+        <ion-card-header>
+            <ion-card-title>Login</ion-card-title>
+        </ion-card-header>
+        <img class="logo" src="../../assets/logo.jpeg" />
+        <ion-item>
+        <ion-label>Usuario</ion-label>
+            <ion-input
+                :value="form.login"
+                @input="form.login = $event.target.value"
+            ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Contraseña</ion-label>
+            <ion-input
+                :value="form.pass"
+                @input="form.pass = $event.target.value"
+                type="password"
+            ></ion-input>
+        </ion-item>
+        <ion-button @click="iniciar" expand="full" :disabled="!isConfigureConection">
+            Iniciar
+        </ion-button>
+        <router-link to="configurar" class="danger-link" v-if="!isConfigureConection">
+            Por favor configure primero los datos de conexión.
+        </router-link>
+        <router-link  style="text-decoration:none" to="configurar">
+            <ion-button expand="full" color="danger">
+                <span>Configurar conexión</span>
+            </ion-button>
+        </router-link>
+    </div>
 </template>
 
 <script>
@@ -124,4 +124,14 @@ export default {
 .normal-text {
     white-space: normal;
 }
+.danger-link {
+    color: #c20000;
+    text-decoration: none;
+}
+.logo{
+    border-radius: 50%;
+    max-width: 60%;
+    padding-top: 20px;
+}
+
 </style>

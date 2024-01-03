@@ -50,7 +50,7 @@
     </ion-menu>
 
     <div class="ion-page" id="main-content">
-      <ion-header>
+      <ion-header v-if="!isLogin">
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-menu-button>=</ion-menu-button>
@@ -72,6 +72,7 @@ export default {
   data () {
     return {
       title:'',
+      
     }
   },
   methods:{
@@ -93,6 +94,10 @@ export default {
       }
       const usuario = localdata.getItem('usuario');
       return usuario != null;
+    },
+
+    isLogin() {
+      return this.$route.meta.title == "Login"
     }
 
   }
